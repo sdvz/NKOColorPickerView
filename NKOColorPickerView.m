@@ -337,15 +337,11 @@ CGFloat const NKOPickerViewCrossHairshWidthAndHeight    = 38.f;
         
         self->_crossHairs.autoresizingMask = UIViewAutoresizingNone;
         
-        UIColor *edgeColor = [UIColor colorWithWhite:0.9 alpha:0.8];
+        UIColor *edgeColor = [UIColor colorWithWhite:0 alpha:0.8];
         
         self->_crossHairs.layer.cornerRadius = 19;
         self->_crossHairs.layer.borderColor = edgeColor.CGColor;
         self->_crossHairs.layer.borderWidth = 2;
-        self->_crossHairs.layer.shadowColor = [UIColor blackColor].CGColor;
-        self->_crossHairs.layer.shadowOffset = CGSizeZero;
-        self->_crossHairs.layer.shadowRadius = 1;
-        self->_crossHairs.layer.shadowOpacity = 0.5f;
     }
     
     if (self->_crossHairs.superview == nil){
