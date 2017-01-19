@@ -38,26 +38,19 @@
 
 @end
 
-//UIImage category
-@interface UIImage(NKO)
-
-- (UIImage*)nko_tintImageWithColor:(UIColor*)tintColor;
-
-@end
-
 //NKOColorPickerView
 #define buttonTintColor [UIColor colorWithRed:236/255.0 green:240/255.0 blue:241/255.0 alpha:1.0]
 #define buttonBackgroundColor [UIColor colorWithWhite:20/255.0 alpha:1.0]
 #define buttonBorderColor [UIColor colorWithWhite:10/255.0 alpha:1.0]
 #define viewBackgroundColor [UIColor colorWithWhite:30/255.0 alpha:1.0]
 
-CGFloat const NKOPickerViewSelectedColorWidthAndHeight  = 40.f;
-CGFloat const NKOPickerViewGradientViewHeight           = 14.f;
-CGFloat const NKOPickerViewGradientTopMargin            = 20.f;
-CGFloat const NKOPickerViewDefaultMargin                = 10.f;
+CGFloat const NKOPickerViewSelectedColorWidthAndHeight          = 40.f;
+CGFloat const NKOPickerViewGradientViewHeight                   = 14.f;
+CGFloat const NKOPickerViewGradientTopMargin                    = 20.f;
+CGFloat const NKOPickerViewDefaultMargin                        = 10.f;
 CGFloat const NKOPickerViewBrightnessIndicatorWidthAndHeight    = 20.0;
-CGFloat const NKOPickerViewCrossHairsWidthAndHeight     = 38.f;
-CGFloat const NKOPickerViewButtonsWidthAndHeight        = 40.f;
+CGFloat const NKOPickerViewCrossHairsWidthAndHeight             = 38.f;
+CGFloat const NKOPickerViewButtonsWidthAndHeight                = 40.f;
 
 @interface NKOColorPickerView()
 
@@ -138,7 +131,7 @@ didChangeColorBlock:(NKOColorPickerDidChangeColorBlock)didChangeColorBlock
                                          CGRectGetWidth(self.frame) - (NKOPickerViewDefaultMargin*4),
                                          NKOPickerViewGradientViewHeight);
     
-    self.hueSatImage.frame = CGRectMake(2*NKOPickerViewDefaultMargin,
+    self.hueSatImage.frame = CGRectMake(CGRectGetWidth(self.frame)/2 - [self availableWidthAndHeightForHueSat]/2,
                                         NKOPickerViewDefaultMargin + NKOPickerViewSelectedColorWidthAndHeight + 2*NKOPickerViewDefaultMargin,
                                         [self availableWidthAndHeightForHueSat],
                                         [self availableWidthAndHeightForHueSat]);
@@ -471,7 +464,7 @@ didChangeColorBlock:(NKOColorPickerDidChangeColorBlock)didChangeColorBlock
     
     if (self->_hueSatImage == nil){
         self->_hueSatImage = [[UIImageView alloc] initWithImage:[self _imageWithName:@"nko_colormap.png"]];
-        self->_hueSatImage.frame = CGRectMake(2*NKOPickerViewDefaultMargin,
+        self->_hueSatImage.frame = CGRectMake(CGRectGetWidth(self.frame)/2 - [self availableWidthAndHeightForHueSat]/2,
                                               NKOPickerViewDefaultMargin + NKOPickerViewSelectedColorWidthAndHeight + 2*NKOPickerViewDefaultMargin,
                                               [self availableWidthAndHeightForHueSat],
                                               [self availableWidthAndHeightForHueSat]);
@@ -603,36 +596,6 @@ didChangeColorBlock:(NKOColorPickerDidChangeColorBlock)didChangeColorBlock
 
 - (void)dealloc {
     CGGradientRelease(gradient);
-}
-
-@end
-
-
-//UIImage category
-@implementation UIImage(NKO)
-
-- (UIImage*)nko_tintImageWithColor:(UIColor*)tintColor {
-    
-    UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
-    
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGRect area = CGRectMake(0, 0, self.size.width, self.size.height);
-    
-    CGContextScaleCTM(ctx, 1, -1);
-    CGContextTranslateCTM(ctx, 0, -area.size.height);
-    CGContextSaveGState(ctx);
-    CGContextClipToMask(ctx, area, self.CGImage);
-    [tintColor set];
-    CGContextFillRect(ctx, area);
-    CGContextRestoreGState(ctx);
-    CGContextSetBlendMode(ctx, kCGBlendModeMultiply);
-    CGContextDrawImage(ctx, area, self.CGImage);
-    
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
-    
-    return newImage;
 }
 
 @end
