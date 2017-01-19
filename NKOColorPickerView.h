@@ -30,13 +30,15 @@
 #import <UIKit/UIKit.h>
 
 typedef void (^NKOColorPickerDidChangeColorBlock)(UIColor *color);
+typedef void (^NKOColorPickerDidCancelBlock)();
 
 @interface NKOColorPickerView : UIView
 
 @property (nonatomic, strong) NKOColorPickerDidChangeColorBlock didChangeColorBlock;
+@property (nonatomic, strong) NKOColorPickerDidCancelBlock didCancelBlock;
 @property (nonatomic, strong) UIColor *color;
 
-- (id)initWithFrame:(CGRect)frame color:(UIColor*)color andDidChangeColorBlock:(NKOColorPickerDidChangeColorBlock)didChangeColorBlock;
+- (id)initWithFrame:(CGRect)frame color:(UIColor*)color didChangeColorBlock:(NKOColorPickerDidChangeColorBlock)didChangeColorBlock didCancelBlock:(NKOColorPickerDidCancelBlock)didCancelBlock;
 
 @end
 
