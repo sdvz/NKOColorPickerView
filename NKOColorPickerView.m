@@ -70,6 +70,26 @@ CGFloat const NKOPickerViewButtonsWidthAndHeight                = 40.f;
 
 @implementation NKOColorPickerView
 
+-(instancetype)init {
+    self = [super init];
+    
+    if (self) {
+        [self setupUI];
+    }
+    
+    return self;
+}
+
+-(instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    
+    if (self) {
+        [self setupUI];
+    }
+    
+    return self;
+}
+
 - (id)initWithFrame:(CGRect)frame
               color:(UIColor*)color
 didChangeColorBlock:(NKOColorPickerDidChangeColorBlock)didChangeColorBlock
@@ -79,17 +99,21 @@ didChangeColorBlock:(NKOColorPickerDidChangeColorBlock)didChangeColorBlock
     
     if (self != nil){
         self.frame = frame;
-        self.backgroundColor = viewBackgroundColor;
-        self.layer.cornerRadius = 6;
-        self.layer.masksToBounds = YES;
-        self.layer.borderWidth = 1.0;
-        self.layer.borderColor = [UIColor colorWithWhite:50/255.9 alpha:1.0].CGColor;
+        [self setupUI];
         self->_color = color;
         self->_didChangeColorBlock = didChangeColorBlock;
         self->_didCancelBlock = didCancelBlock;
     }
     
     return self;
+}
+
+- (void)setupUI {
+    self.backgroundColor = viewBackgroundColor;
+    self.layer.cornerRadius = 6;
+    self.layer.masksToBounds = YES;
+    self.layer.borderWidth = 1.0;
+    self.layer.borderColor = [UIColor colorWithWhite:50/255.9 alpha:1.0].CGColor;
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
@@ -297,17 +321,17 @@ didChangeColorBlock:(NKOColorPickerDidChangeColorBlock)didChangeColorBlock
 
 - (UIImage*)_imageWithName:(NSString*)name {
     
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
-        NSBundle *libraryBundle = [NSBundle bundleForClass:[self class]];
-        UIImage *image = [UIImage imageNamed:name inBundle:libraryBundle compatibleWithTraitCollection:nil];
-        
-        return image;
-    }
-    else {
-        UIImage *image = [UIImage imageNamed:name];
-        
-        return image;
-    }
+    //    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+    //        NSBundle *libraryBundle = [NSBundle bundleForClass:[self class]];
+    //        UIImage *image = [UIImage imageNamed:name inBundle:libraryBundle compatibleWithTraitCollection:nil];
+    //
+    //        return image;
+    //    }
+    //    else {
+    UIImage *image = [UIImage imageNamed:name];
+    
+    return image;
+    //    }
 }
 
 #pragma mark - Touch Handling methods
